@@ -1,0 +1,31 @@
+
+services:
+  frontend:
+    build: ./client
+    container_name: react-ui
+    ports: 
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+    networks:
+      - mern-network
+  
+  backend:
+    build: ./server
+    container_name: react-api
+    restart: always
+    ports:
+      - "5001:5001"
+    environment:
+      - MONGO_URI=mmongodb+srv://admin:admin1@test1.9ifty.mongodb.net/?retryWrites=true&w=majority&appName=Test1
+    networks:
+      - mern-network
+
+networks:
+  mern-network:
+    driver: bridge
+
+  
+
